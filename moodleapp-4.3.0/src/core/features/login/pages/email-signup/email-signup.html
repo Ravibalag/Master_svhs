@@ -19,7 +19,13 @@
 <ion-content>
     <core-loading [hideUntil]="settingsLoaded" *ngIf="!isMinor">
         <div class="list-item-limited-width">
+            <div style=" width: 90%;
+                max-width: 300px;
+                margin: 5px auto;">
 
+
+                <img src="assets/img/silliconvalley.png" role="presentation" alt="">
+            </div>
             <!-- Site has an unsupported required field. -->
             <ion-list *ngIf="!allRequiredSupported" class="ion-padding">
                 <ion-item class="ion-text-wrap">
@@ -79,22 +85,22 @@
                 <!-- Signup form. -->
                 <form *ngIf="!ageDigitalConsentVerification" [formGroup]="signupForm" (ngSubmit)="create($event)" #signupFormEl>
 
-                    <ion-item class="ion-text-wrap ion-text-center">
-                        <ion-label>
-                            <!-- If no sitename show big siteurl. -->
-                            <p *ngIf="!siteName" class="ion-padding item-heading">{{siteUrl}}</p>
-                            <!-- If sitename, show big sitename and small siteurl. -->
-                            <p *ngIf="siteName" class="ion-padding item-heading">
+                    <!-- <ion-item class="ion-text-wrap ion-text-center">
+                        <ion-label> -->
+                    <!-- If no sitename show big siteurl. -->
+                    <!-- <p *ngIf="!siteName" class="ion-padding item-heading">{{siteUrl}}</p> -->
+                    <!-- If sitename, show big sitename and small siteurl. -->
+                    <!-- <p *ngIf="siteName" class="ion-padding item-heading">
                                 <core-format-text [text]="siteName" [filter]="false"></core-format-text>
                             </p>
                             <p *ngIf="siteName">{{siteUrl}}</p>
                         </ion-label>
-                    </ion-item>
+                    </ion-item> -->
 
                     <!-- Username and password. -->
                     <ion-item-divider class="ion-text-wrap">
                         <ion-label>
-                            <h2>{{ 'core.login.createuserandpass' | translate }}</h2>
+                            <h2 style="color: #629dd1;">{{ 'core.login.createuserandpass' | translate }}</h2>
                         </ion-label>
                     </ion-item-divider>
                     <ion-item class="ion-text-wrap">
@@ -122,11 +128,11 @@
                     </ion-item>
 
                     <!-- More details. -->
-                    <ion-item-divider class="ion-text-wrap">
+                    <!-- <ion-item-divider class="ion-text-wrap">
                         <ion-label>
                             <h2>{{ 'core.login.supplyinfo' | translate }}</h2>
                         </ion-label>
-                    </ion-item-divider>
+                    </ion-item-divider> -->
                     <ion-item class="ion-text-wrap">
                         <ion-label position="stacked">
                             <span core-mark-required="true">{{ 'core.user.email' | translate }}</span>
@@ -174,7 +180,7 @@
                     <ng-container *ngFor="let category of categories">
                         <ion-item-divider class="ion-text-wrap">
                             <ion-label>
-                                <p class="item-heading">{{ category.name }}</p>
+                                <p class="item-heading" style="color: #629dd1;">{{ category.name }}</p>
                             </ion-label>
                         </ion-item-divider>
                         <core-user-profile-field *ngFor="let field of category.fields" [field]="field" [edit]="true" [signup]="true"
@@ -185,7 +191,8 @@
                     <ng-container *ngIf="settings.recaptchapublickey">
                         <ion-item-divider class="ion-text-wrap">
                             <ion-label>
-                                <h2><span [core-mark-required]="true">{{ 'core.login.security_question' | translate }}</span></h2>
+                                <h2 style="color: #629dd1;"><span [core-mark-required]="true">{{ 'core.login.security_question' | translate
+                                        }}</span></h2>
                             </ion-label>
                         </ion-item-divider>
                         <core-recaptcha [publicKey]="settings.recaptchapublickey" [model]="captcha" [siteUrl]="siteUrl"

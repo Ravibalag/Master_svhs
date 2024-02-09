@@ -74,12 +74,17 @@ export class CoreLoginSitePage implements OnInit {
     enteredSiteUrl?: CoreLoginSiteInfoExtended;
     siteFinderSettings!: CoreLoginSiteFinderSettings;
 
-    constructor(protected formBuilder: FormBuilder) {}
+    constructor(protected formBuilder: FormBuilder) {
+
+    }
 
     /**
      * Initialize the component.
      */
     async ngOnInit(): Promise<void> {
+        setTimeout(() => {
+            this.silliconvalley()
+        },500 );
         let url = '';
         this.siteSelector = CoreConstants.CONFIG.multisitesdisplay;
 
@@ -141,8 +146,9 @@ export class CoreLoginSitePage implements OnInit {
             this.loadingSites = false;
         }, 1000);
 
-        this.showKeyboard = !!CoreNavigator.getRouteBooleanParam('showKeyboard');
+        // this.showKeyboard = !!CoreNavigator.getRouteBooleanParam('showKeyboard');
     }
+
 
     /**
      * Initialize the site selector.
@@ -345,6 +351,84 @@ export class CoreLoginSitePage implements OnInit {
             modal.dismiss();
         }
     }
+
+    async silliconvalley(){
+        // let url="https://lms.svhs.co"
+       //  let url="https://latest.lms.svhs.co"
+         let url="https://lms.svhs.co"
+
+         let foundSite:CoreLoginSiteInfoExtended = {
+          //   url: "https://lms.svhs.co",
+           //  url: "https://latest.lms.svhs.co",
+             url: "https://lms.svhs.co",
+
+             name: 'connect',
+             title: '',
+             location: '',
+             noProtocolUrl: CoreUrl.removeProtocol(""),
+         };
+         CoreApp.closeKeyboard();
+
+         if (!url) {
+             CoreDomUtils.showErrorModal('core.login.siteurlrequired', true);
+
+             return;
+         }
+
+         if (!CoreNetwork.isOnline()) {
+             CoreDomUtils.showErrorModal('core.networkerrormsg', true);
+
+             return;
+         }
+
+         url = url.trim();
+
+         if (url.match(/^(https?:\/\/)?campus\.example\.edu/)) {
+             this.showLoginIssue(null, new CoreError(Translate.instant('core.login.errorexampleurl')));
+
+             return;
+         }
+
+         const siteData = CoreSites.getDemoSiteData(url);
+
+         if (siteData) {
+             // It's a demo site.
+             await this.loginDemoSite(siteData);
+
+         } else {
+             // Not a demo site.
+             const modal = await CoreDomUtils.showModalLoading();
+
+             let checkResult: CoreSiteCheckResponse;
+
+             try {
+                 checkResult = await CoreSites.checkSite(url);
+             } catch (error) {
+                 // Attempt guessing the domain if the initial check failed
+                 const domain = CoreUrl.guessMoodleDomain(url);
+
+                 if (domain && domain != url) {
+                     try {
+                         checkResult = await CoreSites.checkSite(domain);
+                     } catch (secondError) {
+                         // Try to use the first error.
+                         modal.dismiss();
+
+                         return this.showLoginIssue(url, error || secondError);
+                     }
+                 } else {
+                     modal.dismiss();
+
+                     return this.showLoginIssue(url, error);
+                 }
+             }
+
+             await this.login(checkResult, foundSite);
+
+             modal.dismiss();
+         }
+
+     }
 
     /**
      * Authenticate in a demo site.

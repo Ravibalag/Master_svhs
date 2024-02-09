@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-toolbar>
+
+        <!-- <ion-buttons slot="start"> -->
+        <!-- <ion-back-button [text]="'core.back' | translate"></ion-back-button> -->
+        <!-- <ion-icon name="arrow-back" size='large' (click)="backButton()"></ion-icon>
+        </ion-buttons> -->
+        <ion-buttons slot="start">
+            <ion-back-button [text]="'core.back' | translate"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Cart</ion-title>
+
+
+    </ion-toolbar>
+
+
+</ion-header>
+
+
+<ion-content>
+    <div>
+        <ion-button
+            style="padding-left: 20px;padding-right: 20px;background-color: #3165ae; display: flex;justify-content: center;align-items: center;color: white;"
+            color="white" (click)="store()">Store</ion-button>
+    </div>
+    <div>
+        <ion-button
+            style="padding-left: 20px;padding-right: 20px;background-color: #629dd1; display: flex;margin-top: 10px; justify-content: center;align-items: center;color: white;"
+            color="white" (click)="viewCart()">View Cart</ion-button>
+    </div>
+    <ion-button
+        style="padding-left: 20px;padding-right: 20px;background-color: #3165ae; display: flex;margin-top: 10px; justify-content: center;align-items: center;color: white;"
+        color="white" (click)="orders()">Orders</ion-button>
+</ion-content>

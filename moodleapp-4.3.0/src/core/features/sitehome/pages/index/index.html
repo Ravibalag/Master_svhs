@@ -1,4 +1,14 @@
 <core-navbar-buttons slot="end" prepend>
+    <ion-button *ngIf="searchEnabled" (click)="openCart()">
+        <ion-badge id="cart-badge" style="position: absolute;
+        left: 52%;
+        bottom: 52%;
+        padding-left: 1px;
+        padding-right: 1px;
+        background: #ca3120;
+        ">{{responseValue}}</ion-badge>
+        <ion-icon name="cart-outline" slot="icon-only" aria-hidden="true"></ion-icon>
+    </ion-button>
     <ion-button *ngIf="searchEnabled" (click)="openSearch()" [attr.aria-label]="'core.courses.searchcourses' | translate">
         <ion-icon name="fas-magnifying-glass" slot="icon-only" aria-hidden="true"></ion-icon>
     </ion-button>
@@ -23,6 +33,21 @@
 
             <!-- Site home items: news, categories, courses, etc. -->
             <ng-container *ngIf="items.length > 0">
+                <ng-container *ngIf="Alerttext && Alerttext.trim() !== ''">
+                    <div style="padding-left: 3%;padding-right: 3%;">
+                        <p style="color: #9e4c5d;
+                        font-family: sans-serif;
+                        float: left;
+                        font-weight: bold!important;
+                        text-align: center;">Announcement :</p>
+                        <div style=" color: #b6af64;font-size: medium;font-weight: 600;">
+
+                            <marquee>{{Alerttext}}</marquee>
+
+
+                        </div>
+                    </div>
+                </ng-container>
                 <core-spacer *ngIf="section && section!.hasContent"></core-spacer>
                 <ng-container *ngFor="let item of items">
                     <ng-container [ngSwitch]="item">

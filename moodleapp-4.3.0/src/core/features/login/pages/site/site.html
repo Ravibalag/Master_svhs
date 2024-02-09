@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
             <ion-back-button [text]="'core.back' | translate"></ion-back-button>
@@ -14,15 +14,15 @@
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
-</ion-header>
-<ion-content class="ion-padding">
+</ion-header> -->
+<!-- <ion-content class="ion-padding">
     <div class="list-item-limited-width">
         <div class="ion-text-center ion-padding ion-margin-bottom core-login-site-logo" [class.hidden]="hasSites || enteredSiteUrl">
             <img src="assets/img/login_logo.png" class="avatar-full login-logo" role="presentation" alt="">
         </div>
-        <form [formGroup]="siteForm" (ngSubmit)="connect(siteForm.value.siteUrl, $event)" *ngIf="!fixedSites && siteForm" #siteFormEl>
-            <!-- Form to input the site URL if there are no fixed sites. -->
-            <ng-container *ngIf=" siteSelector=='url'">
+        <form [formGroup]="siteForm" (ngSubmit)="connect(siteForm.value.siteUrl, $event)" *ngIf="!fixedSites && siteForm" #siteFormEl> -->
+<!-- Form to input the site URL if there are no fixed sites. -->
+<!-- <ng-container *ngIf=" siteSelector=='url'">
                 <ion-item>
                     <ion-label position=" stacked">
                         <h2>{{ 'core.login.siteaddress' | translate }}</h2>
@@ -81,11 +81,11 @@
                     </ion-button>
                 </ion-label>
             </ion-item>
-        </form>
+        </form> -->
 
-        <ng-container *ngIf="fixedSites">
-            <!-- Pick the site from a list of fixed sites. -->
-            <ion-list *ngIf="siteSelector == 'list'">
+<!-- <ng-container *ngIf="fixedSites"> -->
+<!-- Pick the site from a list of fixed sites. -->
+<!-- <ion-list *ngIf="siteSelector == 'list'">
                 <ion-item>
                     <ion-label>
                         <h2 class="item-heading">{{ 'core.login.selectsite' | translate }}</h2>
@@ -98,9 +98,9 @@
                     <ng-container *ngTemplateOutlet="sitelisting; context: {site: site}"></ng-container>
                 </ng-container>
             </ion-list>
-        </ng-container>
+        </ng-container> -->
 
-        <ng-container *ngIf="showScanQR && !hasSites && !enteredSiteUrl">
+<!-- <ng-container *ngIf="showScanQR && !hasSites && !enteredSiteUrl">
             <div class="ion-text-center ion-padding ion-margin-top core-login-site-qrcode-separator">{{ 'core.login.or' | translate }}
             </div>
             <ion-button expand="block" fill="outline" class="ion-margin core-login-site-qrcode" (click)="showInstructionsAndScanQR()"
@@ -108,18 +108,25 @@
                 <ion-icon slot="start" name="fas-qrcode" aria-hidden="true"></ion-icon>
                 {{ 'core.scanqr' | translate }}
             </ion-button>
-        </ng-container>
+        </ng-container> -->
 
-        <!-- Help. -->
-        <ion-button class="ion-margin-top core-login-need-help core-button-as-link ion-text-wrap" (click)="showHelp()"
+<!-- Help. -->
+<!-- <ion-button class="ion-margin-top core-login-need-help core-button-as-link ion-text-wrap" (click)="showHelp()"
             aria-haspopup="dialog" expand="block" fill="clear">
             {{ 'core.needhelp' | translate }}
         </ion-button>
     </div>
-</ion-content>
+
+</ion-content> -->
+<div>
+    <div>
+
+        <img class="center-image" src="assets/img/silliconvalley.png" role="presentation" alt="">
+    </div>
+</div>
 
 <!-- Template site selector. -->
-<ng-template #sitelisting let-site="site">
+<!-- <ng-template #sitelisting let-site="site">
     <ion-item button (click)="connect(site.url, $event, site)" [ngClass]="site.className" [attr.aria-label]="site.name" detail="true">
         <ion-thumbnail *ngIf="siteFinderSettings.displayimage" slot="start">
             <img [src]="site.imageurl" *ngIf="site.imageurl" onError="this.src='assets/icon/icon.png'" alt="" role="presentation">
@@ -131,4 +138,4 @@
             <p *ngIf="site.location">{{site.location}}</p>
         </ion-label>
     </ion-item>
-</ng-template>
+</ng-template> -->

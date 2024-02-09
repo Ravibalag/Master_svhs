@@ -67,7 +67,8 @@
         <!-- Go to next or previous page. -->
         <ion-row *ngIf="questions.length && !quizAborted && !showSummary" class="spacer-top">
             <ion-col *ngIf="previousPage >= 0">
-                <ion-button expand="block" fill="outline" (click)="changePage(previousPage)" class="ion-text-wrap">
+                <ion-button expand="block" fill="clear" style="background-color: #629dd1;color: white;border-radius: 5px;"
+                    (click)="changePage(previousPage)" class="ion-text-wrap">
                     <ion-icon name="fas-chevron-left" slot="start" aria-hidden="true"></ion-icon>
                     {{ 'core.previous' | translate }}
                 </ion-button>

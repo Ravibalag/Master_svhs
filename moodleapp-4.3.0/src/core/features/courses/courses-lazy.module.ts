@@ -52,6 +52,48 @@ function buildRoutes(injector: Injector): Routes {
             path: 'list',
             component: CoreCoursesListPage,
         },
+        {
+            path: 'cart',
+            loadChildren: () =>
+                import('./pages/cart/cart.module')
+                    .then(m => m.CartListPageModule),
+        },
+        {
+            path: 'cartNav',
+            loadChildren: () =>
+                import('./pages/cartNav/cartNav.module')
+                    .then(m => m.CartNavListPageModule),
+        },
+        {
+            path: 'viewCart',
+            loadChildren: () =>
+                import('./pages/viewCart/viewCart.module')
+                    .then(m => m.ViewCartListPageModule),
+        },
+        {
+            path: 'filterCart',
+            loadChildren: () =>
+                import('./pages/filterCart/filterCart.module')
+                    .then(m => m.FilterCartPageModule),
+        },
+        {
+            path: 'orders',
+            loadChildren: () =>
+                import('./pages/orders/orders.module')
+                    .then(m => m.OrdersCartPageModule),
+        },
+        {
+            path: 'completedCourse',
+            loadChildren: () =>
+                import('./pages/completedCourse/completedCourse.module')
+                    .then(m => m.CompletedCourseListPageModule),
+        },
+        {
+            path: 'incompletedCourse',
+            loadChildren: () =>
+                import('./pages/incompletedCourse/incompletedCourse.module')
+                    .then(m => m.InCompletedCourseListPageModule),
+        },
         ...buildTabMainRoutes(injector, {
             redirectTo: 'my',
             pathMatch: 'full',

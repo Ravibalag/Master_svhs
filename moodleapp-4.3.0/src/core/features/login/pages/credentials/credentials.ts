@@ -203,8 +203,7 @@ export class CoreLoginCredentialsPage implements OnInit, OnDestroy {
             !!this.supportConfig?.canContactSupport(),
             this.showForgottenPassword,
         );
-        this.authInstructions = this.siteConfig.authinstructions ||
-            (this.canSignup ? Translate.instant('core.login.loginsteps') : '');
+        this.authInstructions = this.siteConfig.authinstructions ||"To access and enroll in our supplemental courses, or to register for our online diploma program you first need to create an SVHS user account. Click on the button Create new account  Create a user name and password.An email will immediately be sent to your email address.    Open the email, click on the web link.The email address for your account will be confirmed and you will be able to login. (If you don't receive the email confirmation Contact us)";
 
         if (!this.eventThrown && !this.viewLeft) {
             this.eventThrown = true;

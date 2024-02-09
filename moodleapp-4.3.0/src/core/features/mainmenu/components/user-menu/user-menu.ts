@@ -32,6 +32,8 @@ import { CoreSites } from '@services/sites';
 import { CoreDomUtils } from '@services/utils/dom';
 import { ModalController, Translate } from '@singletons';
 import { Subscription } from 'rxjs';
+import { AlertController } from '@ionic/angular';
+import { CorePath } from '@singletons/path';
 
 /**
  * Component to display a user menu.
@@ -42,6 +44,7 @@ import { Subscription } from 'rxjs';
     styleUrls: ['user-menu.scss'],
 })
 export class CoreMainMenuUserMenuComponent implements OnInit, OnDestroy {
+    constructor(private alertController: AlertController) {}
 
     siteId?: string;
     siteInfo?: CoreSiteInfo;
@@ -55,6 +58,8 @@ export class CoreMainMenuUserMenuComponent implements OnInit, OnDestroy {
     displaySwitchAccount = true;
     displayContactSupport = false;
     removeAccountOnLogout = false;
+    protected enrolUrl = '';
+    userId?: number;
 
     protected subscription!: Subscription;
 
@@ -258,6 +263,50 @@ export class CoreMainMenuUserMenuComponent implements OnInit, OnDestroy {
 
         await CoreLoginHelper.goToAddSite(true, true);
     }
+
+    // async delete(): Promise<void> {
+    //     CoreNavigator.navigateToSitePath('/courses/incompletedCourse');
+    // }
+
+    async delete() {
+        this.userId = CoreSites.getCurrentSiteUserId();
+
+        const currentSiteUrl = CoreSites.getRequiredCurrentSite().getURL();
+
+        const alert = await this.alertController.create({
+          header: 'Confirm Deletion',
+          message: 'Are you sure you want to delete your account?',
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              cssClass: 'secondary',
+            },
+            {
+              text: 'Delete',
+              handler: async () => {
+                // this.enrolUrl = CorePath.concatenatePaths(currentSiteUrl, `my/req_deleteuser.php?mode=mobile`);
+                // console.log(this.enrolUrl);
+
+             this.enrolUrl =  `https://lms.svhs.co/my/req_deleteuser.php?userid=`+this.userId+`&mode=mobile`;
+                await CoreSites.getRequiredCurrentSite().openInBrowserWithAutoLogin(
+                    this.enrolUrl,
+                    undefined,
+                    {
+                        showBrowserWarning: false,
+                    },
+                );
+
+
+              },
+            },
+          ],
+        });
+
+        await alert.present();
+      }
+
+
 
     /**
      * Close modal.

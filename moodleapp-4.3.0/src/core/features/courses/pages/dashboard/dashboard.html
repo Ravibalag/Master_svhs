@@ -1,4 +1,14 @@
 <core-navbar-buttons slot="end" prepend>
+    <ion-button (click)="openCart()">
+        <ion-badge id="cart-badge" style="position: absolute;
+        left: 52%;
+        bottom: 52%;
+        padding-left: 1px;
+        padding-right: 1px;
+        background: #ca3120;
+        ">{{responseValue}}</ion-badge>
+        <ion-icon name="cart-outline" slot="icon-only" aria-hidden="true"></ion-icon>
+    </ion-button>
     <ion-button *ngIf="searchEnabled" (click)="openSearch()" [attr.aria-label]="'core.courses.searchcourses' | translate">
         <ion-icon name="fas-magnifying-glass" slot="icon-only" aria-hidden="true"></ion-icon>
     </ion-button>
@@ -15,10 +25,18 @@
             </ng-container>
         </ion-list>
 
-        <core-block-side-blocks-button slot="fixed" *ngIf="hasSideBlocks" contextLevel="user" [instanceId]="userId">
-        </core-block-side-blocks-button>
+        <!-- <core-block-side-blocks-button slot="fixed" *ngIf="hasSideBlocks" contextLevel="user" [instanceId]="userId">
+        </core-block-side-blocks-button> -->
 
         <core-empty-box *ngIf="!hasMainBlocks" icon="fas-cubes" [message]="'core.course.nocontentavailable' | translate">
         </core-empty-box>
     </core-loading>
+    <ion-content>
+
+        <div style=" display: flex;
+        justify-content: space-between;margin-left: 4%;margin-right: 4%;">
+            <button class="square-button" (click)="enrollments()">Course Enrollments</button>
+            <button class="square-button" (click)="completed()">Completed Courses</button>
+        </div>
+    </ion-content>
 </ion-content>

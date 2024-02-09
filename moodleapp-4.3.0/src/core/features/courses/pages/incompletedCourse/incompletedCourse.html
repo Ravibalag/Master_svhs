@@ -1,0 +1,102 @@
+<ion-header>
+    <ion-toolbar>
+
+        <ion-buttons slot="start">
+            <ion-back-button [text]="'core.back' | translate"></ion-back-button>
+            <!-- <ion-icon name="arrow-back" size='large' (click)="backButton()"></ion-icon> -->
+        </ion-buttons>
+        <ion-title>Course Enrollments</ion-title>
+
+
+    </ion-toolbar>
+
+
+</ion-header>
+
+
+<ion-content>
+    <ng-container *ngIf="isLoading; else contentTemplate">
+        <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <ion-spinner></ion-spinner>
+                <p>Loading</p>
+            </div>
+        </div>
+    </ng-container>
+
+
+    <ng-template #contentTemplate>
+        <ng-container *ngIf="inCompletedValue.length > 0; else noCoursesTemplate">
+            <ion-card *ngFor="let inCompletedValue of inCompletedValue" style="border-color: black;">
+                <ion-card-header style="display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                background-color: #cee0f1;
+                margin-bottom: 5px;">
+                    <!-- (click)="courseClick(inCompletedValue.Course_ID)"> -->
+
+                    <div>
+
+                        <strong> {{inCompletedValue['Course_Name']}}</strong>
+                    </div>
+                    <img alt="{{inCompletedValue['Course_Name']}}" src={{inCompletedValue.Course_image}} />
+
+
+                </ion-card-header>
+                <ul style="padding: 0;">
+                    <ion-card-content>
+                        <div>
+                            <strong>Grade:</strong>
+                            <strong>{{ inCompletedValue['Course_grade']}}</strong>
+
+                            <p>Quizzes {{inCompletedValue['Quiz']}}:Completed = {{inCompletedValue['Quiz_completed']}} | Incomplete
+                                ={{inCompletedValue['Quiz_incomplete']}}</p>
+                            <p>Tests {{inCompletedValue['Tests']}}: Completed = {{inCompletedValue['Test_completed']}} | Incomplete =
+                                {{inCompletedValue['Test_incomplete']}}</p>
+                            <p>Assignments {{inCompletedValue['Assignments']}}: Graded = {{inCompletedValue['Graded']}} | Submitted for
+                                grading
+                                = {{inCompletedValue['Submitted_grades']}} | Not submitted = {{inCompletedValue['Not_submitted']}}</p>
+                            <p>Final Exam {{inCompletedValue['Final_exam']}}: Completed = {{inCompletedValue['Final_completed']}} |
+                                Incomplete =
+                                {{inCompletedValue['Final_incomplete']}}</p>
+                            <ion-progress-bar mode="determinate" [value]="getcal(inCompletedValue)"
+                                class="custom-progress-bar"></ion-progress-bar>
+                            <p>Progress bar :<strong>{{inCompletedValue['progress_value']}}%</strong></p>
+                        </div>
+
+                    </ion-card-content>
+
+                </ul>
+
+                <ion-footer style="display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 0;
+                margin-bottom: 5px;">
+                    <strong>Links</strong>
+                    <div style="color: #629cd1;">
+                        <p (click)="gradebooksClick(inCompletedValue['Course_ID'])">Gradebooks</p>
+                        <!-- <p>Assignments</p> -->
+                    </div>
+
+
+                </ion-footer>
+
+            </ion-card>
+        </ng-container>
+    </ng-template>
+
+    <ng-template #noCoursesTemplate>
+        <div *ngIf="!(inCompletedValue.length > 0)" style="display: flex; justify-content: center; align-items: center; height: 100%;">
+            <p>No Courses For Enrollment</p>
+
+        </div>
+    </ng-template>
+
+
+
+</ion-content>

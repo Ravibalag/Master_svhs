@@ -1,36 +1,36 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-button fill="clear" (click)="previous($event)" [attr.aria-label]="'core.back' | translate">
+            <!-- <ion-button fill="clear" (click)="previous($event)" [attr.aria-label]="'core.back' | translate">
                 <ion-icon slot="icon-only" name="fas-arrow-left" aria-hidden="true"></ion-icon>
-            </ion-button>
+            </ion-button> -->
         </ion-buttons>
         <ion-title></ion-title>
         <ion-buttons slot="end">
-            <ion-button fill="clear" (click)="skip($event)" [attr.aria-label]="'core.skip' | translate">
+            <!-- <ion-button fill="clear" (click)="skip($event)" [attr.aria-label]="'core.skip' | translate">
                 {{'core.skip' | translate}}
-            </ion-button>
+            </ion-button> -->
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
     <div>
         <div class="ion-text-center ion-padding core-login-site-logo">
-            <img src="assets/img/login_logo.png" class="avatar-full login-logo" role="presentation" alt="">
+            <img src="assets/img/silliconvalley.png" class="avatar-full login-logo" role="presentation" alt="">
         </div>
 
         <h1 class="core-login-onboarding-step">
-            {{'core.login.onboardingwelcome' | translate}}
+            Welcome
         </h1>
 
-        <div *ngIf="step == 0" class="core-login-onboarding-step">
+        <!-- <div *ngIf="step == 0" class="core-login-onboarding-step">
             <ion-button expand="block" (click)="skip($event)" class="ion-margin-bottom" fill="outline">
                 {{'core.login.onboardingimalearner' | translate}}
             </ion-button>
             <ion-button expand="block" (click)="next($event)" class="ion-margin-bottom" fill="outline">
                 {{'core.login.onboardingimaneducator' | translate}}
             </ion-button>
-        </div>
+        </div> -->
 
         <div *ngIf="step == 1" class="core-login-onboarding-step">
             <p class="core-login-onboarding-text">

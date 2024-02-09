@@ -1,0 +1,114 @@
+<ion-header>
+    <ion-toolbar>
+
+        <ion-buttons slot="start">
+            <ion-back-button [text]="'core.back' | translate"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Store</ion-title>
+
+        <ion-buttons slot="end" style="margin-right: 30px;">
+            <ion-button>
+                <ion-badge id="cart-badge" style="position: absolute;
+                left: 52%;
+                bottom: 52%;
+                padding-left: 1px;
+                padding-right: 1px;
+                background: #ca3120;
+                ">{{count}}</ion-badge>
+                <ion-icon name="cart-outline" color="black" slot="icon-only" aria-hidden="true"></ion-icon>
+            </ion-button>
+            <ion-button (click)="toggleDesign()">
+                <ion-icon name="filter" color="black" slot="icon-only" aria-hidden="true"></ion-icon>
+            </ion-button>
+            <ion-button style="background:  #629dd1; border-radius: 25px;" color="light" size="small" (click)="viewCart()">
+                View Cart
+            </ion-button>
+
+        </ion-buttons>
+
+    </ion-toolbar>
+
+
+</ion-header>
+
+<!-- list design -->
+
+<ion-content>
+
+    <ion-label style="color:#629dd1 ;margin-left: 15px;font-variant-caps: all-petite-caps;">
+        SELECT YOUR COURSE:
+    </ion-label>
+
+    <!-- <ion-card *ngFor="let r of responseValue" style="justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;">
+        <img alt="{{r['Course Name']}}" src={{r.Course_Image}} height="160" width="240" style="margin-top: 10px;" />
+        <ion-card-header>
+            <ion-card-title>{{r['Course_Name']}}</ion-card-title>
+            <ion-card-subtitle>{{r['Branch_Name']}}</ion-card-subtitle>
+            <ion-card-subtitle>$125.00</ion-card-subtitle>
+        </ion-card-header>
+
+
+        <ion-button style="color: white;background-color: blue;" size="small">
+            <ng-container *ngIf="r.Status === '0'">Add to Cart</ng-container>
+            <ng-container *ngIf="r.Status === '1'">Enrolled</ng-container>
+            <ng-container *ngIf="r.Status === '2'">Added to Cart</ng-container> -->
+
+    <!-- <ng-container *ngIf="r.Status === 'Enrolled'; else notEnrolled">{{ r.Status }}</ng-container>
+            <ng-template #notEnrolled>Add to cart</ng-template> -->
+
+    <!-- </ion-button>
+    </ion-card> -->
+
+    <ng-container *ngIf="isLoading; else contentTemplate">
+        <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <ion-spinner></ion-spinner>
+                <p>Loading</p>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #contentTemplate>
+        <ng-container *ngIf="responseValue.length > 0 ; noCoursesTemplate">
+            <ion-card *ngFor="let r of responseValue">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col size="5">
+                            <img alt="{{r['Course Name']}}" src={{r.Course_Image}}
+                                style="max-width: 300px;width: 100%;padding-top: 20px;" />
+                        </ion-col>
+                        <ion-col size="7">
+                            <ion-card-header>
+                                <ion-card-title style="font-size: 16px">{{r['Course_Name']}}</ion-card-title>
+                                <ion-card-subtitle>{{r['Branch_Name']}}</ion-card-subtitle>
+                                <ion-card-subtitle>$125.00</ion-card-subtitle>
+                            </ion-card-header>
+
+                            <ion-button style="color: white;background-color: blue;" size="small"
+                                [disabled]="r.Status === '1' || r.Status === '2'" (click)="updateButton(r)">
+                                <ng-container *ngIf="r.Status === '0'">Add to Cart</ng-container>
+                                <ng-container *ngIf="r.Status === '1'">Enrolled</ng-container>
+                                <ng-container *ngIf="r.Status === '2'">
+                                    <ion-icon name="checkmark" style="color:#03ff00;transform: scale(0.6);"></ion-icon> Added to Cart
+                                </ng-container>
+                            </ion-button>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-card>
+        </ng-container>
+
+    </ng-template>
+
+    <ng-template #noCoursesTemplate>
+        <div *ngIf="!(responseValue && responseValue.length > 0)"
+            style="display: flex; justify-content: center; align-items: center; height: 100%;">
+            <p>No matching Courses Found.</p>
+        </div>
+    </ng-template>
+
+
+
+</ion-content>

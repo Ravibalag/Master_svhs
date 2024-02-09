@@ -208,6 +208,7 @@ export class CoreLoginEmailSignupPage implements OnInit {
         }
 
         this.categories = CoreLoginHelper.formatProfileFieldsForSignup(this.settings.profilefields);
+        this.categories = this.categories.filter(cat => cat.name !== 'Full Time Students Only - Registration Information');
 
         if (this.settings.recaptchapublickey) {
             this.captcha.recaptcharesponse = ''; // Reset captcha.

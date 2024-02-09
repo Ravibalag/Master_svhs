@@ -1,0 +1,95 @@
+<ion-header>
+    <ion-toolbar>
+
+        <ion-buttons slot="start">
+            <ion-back-button [text]="'core.back' | translate"></ion-back-button>
+            <!-- <ion-icon name="arrow-back" size='large' (click)="backButton()"></ion-icon> -->
+        </ion-buttons>
+        <ion-title>Completed Courses</ion-title>
+
+
+    </ion-toolbar>
+
+
+</ion-header>
+
+
+<ion-content>
+    <ng-container *ngIf="isLoading; else contentTemplate">
+        <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <ion-spinner></ion-spinner>
+                <p>Loading</p>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #contentTemplate>
+        <ng-container *ngIf="CompletedValue.length > 0; else noCoursesTemplate">
+            <ion-card *ngFor="let completedValue of CompletedValue" style="border-color: black;">
+                <ion-card-header style="display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                background-color: #cee0f1;
+                margin-bottom: 5px;">
+                    <div>
+
+                        <strong> {{completedValue['Course_Name']}}</strong>
+                    </div>
+                    <img alt="{{completedValue['Course_Name']}}" src={{completedValue.Course_image}} />
+
+
+                </ion-card-header>
+                <ul style="padding: 0;">
+                    <ion-card-content>
+                        <div>
+                            <strong>Grade:</strong>
+                            <strong> F(48.87%)</strong>
+
+                            <p>Quizzes {{completedValue['Quiz']}}:Completed = {{completedValue['Quiz_completed']}} | Incomplete
+                                ={{completedValue['Quiz_incomplete']}}</p>
+                            <p>Tests {{completedValue['Tests']}}: Completed = {{completedValue['Test_completed']}} | Incomplete =
+                                {{completedValue['Test_incomplete']}}</p>
+                            <p>Assignments {{completedValue['Assignments']}}: Graded = {{completedValue['Graded']}} | Submitted for grading
+                                = {{completedValue['Submitted_grades']}} | Not submitted = {{completedValue['Not_submitted']}}</p>
+                            <p>Final Exam {{completedValue['Final_exam']}}: Completed = {{completedValue['Final_completed']}} | Incomplete =
+                                {{completedValue['Final_incomplete']}}</p>
+                            <ion-progress-bar mode="determinate" [value]="value1" class="custom-progress-bar"></ion-progress-bar>
+                            <p>Progress bar :<strong>{{completedValue['progress_value']}}%</strong></p>
+                        </div>
+
+                    </ion-card-content>
+
+                </ul>
+
+                <ion-footer style="display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 0;
+                margin-bottom: 5px;">
+                    <strong>Links</strong>
+                    <div style="color: #629cd1;">
+                        <p (click)="gradebooksClick(completedValue['Course_ID'])">Gradebooks</p>
+                        <!-- <p>Assignments</p> -->
+                    </div>
+
+
+                </ion-footer>
+
+            </ion-card>
+        </ng-container>
+    </ng-template>
+    <ng-template #noCoursesTemplate>
+        <div *ngIf="!(CompletedValue && CompletedValue.length > 0)"
+            style="display: flex; justify-content: center; align-items: center; height: 100%;">
+            <p>No Completed Courses</p>
+        </div>
+    </ng-template>
+
+
+
+
+</ion-content>

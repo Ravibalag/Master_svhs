@@ -32,7 +32,9 @@ import { CoreUtils } from '@services/utils/utils';
 import { CoreTime } from '@singletons/time';
 import { CoreAnalytics, CoreAnalyticsEventType } from '@services/analytics';
 import { CoreBlockSideBlocksComponent } from '@features/block/components/side-blocks/side-blocks';
-
+import { baseUrl } from '@features/courses/pages/dashboard/dashboard';
+import { HttpClient } from '@angular/common/http';
+import { CartService } from '@features/courses/pages/cartService';
 /**
  * Page that displays site home index.
  */
@@ -55,11 +57,14 @@ export class CoreSiteHomeIndexPage implements OnInit, OnDestroy {
     currentSite!: CoreSite;
     searchEnabled = false;
     newsForumModule?: CoreCourseModuleData;
+    responseValue?:number;
+    userId?: number;
+    Alerttext?:string;
 
     protected updateSiteObserver: CoreEventObserver;
     protected logView: () => void;
 
-    constructor(protected route: ActivatedRoute) {
+    constructor(protected route: ActivatedRoute,private http: HttpClient,private cartService: CartService) {
         // Refresh the enabled flags if site is updated.
         this.updateSiteObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, () => {
             this.searchEnabled = !CoreCourses.isSearchCoursesDisabledInSite();
@@ -82,6 +87,11 @@ export class CoreSiteHomeIndexPage implements OnInit, OnDestroy {
      * @inheritdoc
      */
     ngOnInit(): void {
+        this.userId = CoreSites.getCurrentSiteUserId();
+        this.getData(this.userId);
+        this.cartService.cartCount$.subscribe(count => {
+            this.responseValue = count;
+          });
         this.searchEnabled = !CoreCourses.isSearchCoursesDisabledInSite();
 
         this.currentSite = CoreSites.getRequiredCurrentSite();
@@ -194,6 +204,21 @@ export class CoreSiteHomeIndexPage implements OnInit, OnDestroy {
                 refresher?.complete();
             });
         });
+    }
+
+    getData(userId: number) {
+        this.http.get(baseUrl+`/webservice/rest/server.php?wstoken=9b90c397414127d3515d94173fd9ee70&wsfunction=local_mobile_store_courses_store_course_data&moodlewsrestformat=json&userid=`+userId)
+        .subscribe((data: any) => {
+
+           this.responseValue = data.Cartcount;
+           this.Alerttext=data.Alerttext;
+           console.log(this.Alerttext);
+
+
+        });
+     }
+     async openCart(): Promise<void> {
+        CoreNavigator.navigateToSitePath('/courses/cartNav');
     }
 
     /**

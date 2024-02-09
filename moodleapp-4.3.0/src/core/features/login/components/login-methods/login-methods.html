@@ -11,7 +11,8 @@
 </div>
 
 <ng-container *ngIf="showScanQR">
-    <ion-button expand="block" fill="outline" class="ion-margin core-login-site-qrcode" (click)="showInstructionsAndScanQR()">
+    <ion-button expand="block" fill="clear" style="background-color: #629dd1;color: white;border-radius: 5px;"
+        class="ion-margin core-login-site-qrcode" (click)="showInstructionsAndScanQR()">
         <ion-icon slot="start" name="fas-qrcode" aria-hidden="true"></ion-icon>
         {{ 'core.scanqr' | translate }}
     </ion-button>

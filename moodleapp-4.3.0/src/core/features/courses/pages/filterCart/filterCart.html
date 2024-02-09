@@ -1,0 +1,134 @@
+<ion-header>
+    <ion-toolbar>
+
+        <ion-buttons slot="start">
+            <ion-back-button [text]="'core.back' | translate"></ion-back-button>
+        </ion-buttons>
+        <ion-title> Apply Filter</ion-title>
+        <!-- <ion-buttons slot="end" style="margin-right: 30px;">
+            <ion-button (click)="toggleDesign()">
+                <ion-icon name="filter" color="black" slot="icon-only" aria-hidden="true"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" (click)="viewCart()">
+                View Cart
+            </ion-button>
+
+        </ion-buttons> -->
+
+    </ion-toolbar>
+
+
+</ion-header>
+
+<!-- search design -->
+
+<ion-content>
+    <div style="margin-left: 10px; margin-right: 10px;">
+
+
+        <!-- <ion-label style="color: #3266AE;font-style:italic;font-size: 16px;">
+            APPLY FILTER
+        </ion-label> -->
+        <ion-searchbar style="margin-top: 10px;" placeholder="Search" [(ngModel)]="searchQuery"
+            (ionChange)="search(searchQuery)"></ion-searchbar>
+
+        <div style="display: flex;flex-direction: row;justify-content: space-between;">
+            <ion-label style="margin-top: 15px;margin-left: 10px;  color: #2F64AD;">Department:</ion-label>
+            <ion-button style="background: #629dd1;color: white;border-radius: 25px;" fill="clear" class="linkbutton"
+                (click)="clearRadioOptions()">Clear</ion-button>
+        </div>
+        <div class="filter">
+            <div>
+                <input id="art" type="radio" class="radio align" value="Art" name="filter" style="top: 10px;"
+                    (change)="onRadioButtonChange($event)">
+                <label for="Art" style="font-size: 16px;padding-left: 10px;color: #629CD1;">Art</label>
+            </div>
+            <div>
+                <input id="electives" type="radio" class="radio align" value="Electives" name="filter"
+                    (change)="onRadioButtonChange($event)">
+                <label for="Electives" style="font-size: 16px;padding-left: 10px;color: #629CD1;">Electives</label>
+            </div>
+
+            <div>
+                <input id="english" type="radio" class="radio align" value="English" name="filter" (change)="onRadioButtonChange($event)">
+                <label for="English" style="font-size: 16px;padding-left: 10px;color: #629CD1;">English</label>
+            </div>
+            <div>
+                <input id="languages" type="radio" class="radio align" value="Languages" name="filter"
+                    (change)="onRadioButtonChange($event)">
+                <label for="Languages" style="font-size: 16px;padding-left: 10px;color: #629CD1;">Languages</label>
+            </div>
+            <div>
+                <input id="math" type="radio" class="radio align" value="Math" name="filter" (change)="onRadioButtonChange($event)">
+                <label style="font-size: 16px;padding-left: 10px;color: #629CD1;" for="Math">Math</label>
+            </div>
+            <div>
+                <input id="science" type="radio" class="radio align" value="Science" name="filter" (change)="onRadioButtonChange($event)">
+                <label for="Science" style="font-size: 16px;padding-left: 10px;color: #629CD1;">Science</label>
+            </div>
+            <div>
+                <input id="socialscience" type="radio" class="radio align" value="Social science" name="filter"
+                    (change)="onRadioButtonChange($event)">
+                <label for="Social science" style="font-size: 16px;padding-left: 10px; color: #629CD1;">Social science</label>
+            </div>
+        </div>
+
+        <ion-label class="headerstyle">
+            Courses Approved By:
+        </ion-label>
+
+        <div>
+            <ion-checkbox class="coursedapprovedby" [checked]="ucCheckboxValue === 1" (ionChange)="updateUCCheckboxValue($event)">
+            </ion-checkbox>
+            <label style="font-size: 16px;padding-left: 10px;color: #629CD1;"> Approved by University of California
+                (A-G
+                Program)</label>
+
+        </div>
+        <div>
+            <ion-checkbox class="coursedapprovedby" [checked]="ncaaCheckboxValue === 1" (ionChange)="updateNCAACheckboxValue($event)">
+            </ion-checkbox>
+            <label style="font-size: 16px;padding-left: 10px;color: #629CD1;">Approved by NCAA</label>
+
+        </div>
+        <div id="list">
+            <ul>
+                <li>Enroll anytime: enrollment is open 24 hours a day, 365 days a year—summer school included.</li>
+                <li>All courses self-paced, teacher-supported and video-based.</li>
+                <li>“Part 1” = first semester. “Part 2” = second semester.</li>
+                <li>All courses require 75 hours of study, depending on the speed of the student.</li>
+                <li>Transcripts are issued for transfer of credits.</li>
+                <li>Before buying, check your school’s policy for transfer of credits.</li>
+                <div>
+                    <a target="_blank" href="https://svhs.co/course-catalog/" id="yui_3_17_2_1_1682313310312_37">See full course list.</a>
+
+                </div>
+                <div>
+                    <a target="_blank" href="https://svhs.co/pdf/svhs-flyer.pdf" id="yui_3_17_2_1_1682313310312_38">Print version of course
+                        catalog.</a>
+                </div>
+                <div>
+                    <a target="_blank" href="https://svhs.co/about/" id="yui_3_17_2_1_1682313310312_40">About our courses.</a>
+                </div>
+                <div>
+                    <a target="_blank" href="https://svhs.co/support/" id="yui_3_17_2_1_1682313310312_41">Frequently asked questions.</a>
+                </div>
+
+            </ul>
+        </div>
+        <img alt="Stripe" src="https://svhs.co/wp-content/uploads/2020/11/96.png" style="margin-left: 30px;" />
+
+    </div>
+</ion-content>
+<ion-footer style="display: flex;flex-direction: row;justify-content: flex-end;align-items: flex-end; margin-right: 20px;">
+    <!-- <ion-row> -->
+    <!-- <ion-col size="9"> -->
+    <ion-button fill="clear" style="    background: #2F64AD;
+    color: white;
+    border-radius: 10px;" (click)="apply()">Apply</ion-button>
+    <!-- </ion-col> -->
+    <!-- <ion-col size="3">
+            <ion-label>${{sum}}</ion-label>
+        </ion-col> -->
+    <!-- </ion-row> -->
+</ion-footer>

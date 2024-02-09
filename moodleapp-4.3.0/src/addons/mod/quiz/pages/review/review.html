@@ -119,7 +119,8 @@
                 </ion-col>
                 <ion-col class="ion-text-center">
                     <!-- In review we can toggle between all questions in same page or one page at a time. -->
-                    <ion-button class="ion-text-wrap" *ngIf="numPages > 1" (click)="switchMode()" fill="outline">
+                    <ion-button class="ion-text-wrap" *ngIf="numPages > 1" (click)="switchMode()"
+                        style="background-color: #3165ae;color: white;border-radius: 5px;" fill="clear">
                         <span *ngIf="!showAll">{{ 'addon.mod_quiz.showall' | translate }}</span>
                         <span *ngIf="showAll">{{ 'addon.mod_quiz.showeachpage' | translate }}</span>
                     </ion-button>

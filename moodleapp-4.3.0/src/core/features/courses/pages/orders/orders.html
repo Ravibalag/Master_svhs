@@ -1,0 +1,129 @@
+<ion-header>
+    <ion-toolbar>
+
+        <ion-buttons slot="start">
+            <ion-back-button [text]="'core.back' | translate"></ion-back-button>
+        </ion-buttons>
+        <ion-title> Orders</ion-title>
+        <!-- <ion-buttons slot="end" style="margin-right: 30px;">
+            <ion-button (click)="toggleDesign()">
+                <ion-icon name="filter" color="black" slot="icon-only" aria-hidden="true"></ion-icon>
+            </ion-button>
+            <ion-button fill="clear" (click)="viewCart()">
+                View Cart
+            </ion-button>
+
+        </ion-buttons> -->
+
+    </ion-toolbar>
+
+
+</ion-header>
+<ion-content>
+    <ng-container *ngIf="isLoading; else contentTemplate">
+        <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <ion-spinner></ion-spinner>
+                <p>Loading...</p>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #contentTemplate>
+        <ng-container *ngIf="responseValue.length > 0; else noCoursesTemplate">
+            <ion-card *ngFor="let r of responseValue">
+                <ion-card-header style="background-color: #cee0f1; max-height: 400px; overflow: auto;">
+
+                    <div style="width:30%;float: right;">
+                        <div *ngIf="!isMobileView()">
+                            <strong>Purchased Course</strong>
+
+                            <ul *ngFor="let course of r.order_course_lists.course_lists"
+                                style="list-style: none; padding: 0; display: flex; flex-wrap: wrap; ">
+
+                                <div style="display: flex; flex-direction: row; justify-content: center; margin-right: 20px;">
+                                    <div>
+                                        <p> {{course.coursefullname}}</p>
+                                        <p>Status: <strong>{{course.status}}</strong></p>
+                                    </div>
+                                </div>
+
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <div>
+                            <p>Order Placed</p>
+                            <strong> {{r['order_placed']}}</strong>
+                        </div>
+                        <div>
+                            <p>Total</p>
+                            <strong>${{r['total']}}</strong>
+                        </div>
+                        <div>
+                            <p>Payee Name:<strong>{{r['payee_name']}}</strong></p>
+                            <p>Payee Email:<strong>{{r['payee_email']}}</strong></p>
+                        </div>
+                        <div>
+                            <p>Order#</p>
+                            <strong>{{r['order_id']}}</strong>
+                        </div>
+                        <div *ngIf="isMobileView()">
+                            <ion-button class="invoice" (click)="openPDF(r)">
+                                <ion-icon slot="start" name="download"></ion-icon>
+                                Invoice
+                            </ion-button>
+                        </div>
+
+
+                    </div>
+
+
+
+                </ion-card-header>
+                <ion-card-content style="display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                background-color: #eaeff7;">
+                    <ul style="padding: 0;">
+                        <div *ngIf="isMobileView()">
+                            <div *ngFor="let course of r.order_course_lists.course_lists">
+                                <!-- <div> -->
+                                <img alt="{{course.coursefullname}}" src="{{course.courseimage}}" />
+
+                                <div style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
+                                    <p> {{course.coursefullname}}</p>
+                                    <p>Status:<strong>{{ course.status }}</strong></p>
+
+                                    <!-- </div> -->
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div *ngIf="!isMobileView()">
+                            <ion-button class="invoice" (click)="openPDF(r)">
+                                <ion-icon slot="start" name="download"></ion-icon>
+                                Invoice
+                            </ion-button>
+
+                        </div>
+
+                    </ul>
+                </ion-card-content>
+
+
+            </ion-card>
+        </ng-container>
+
+    </ng-template>
+    <ng-template #noCoursesTemplate>
+        <div *ngIf="!(responseValue && responseValue.length > 0)"
+            style="display: flex; justify-content: center; align-items: center; height: 100%;">
+            <p>No Records Found </p>
+        </div>
+    </ng-template>
+
+</ion-content>

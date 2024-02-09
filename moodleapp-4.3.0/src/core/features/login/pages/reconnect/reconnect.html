@@ -33,14 +33,21 @@
                 <div class="core-login-site">
                     <div class="core-login-site-logo" *ngIf="!showUserAvatar">
                         <!-- Show site logo or a default image. -->
-                        <img *ngIf="logoUrl" [src]="logoUrl" role="presentation" onError="this.src='assets/img/login_logo.png'" alt="">
+                        <img *ngIf="logoUrl" [src]="logoUrl" role="presentation" alt="" onError="this.src='assets/img/login_logo.png'">
                         <img *ngIf="!logoUrl" src="assets/img/login_logo.png" role="presentation" alt="">
                     </div>
 
-                    <p *ngIf="siteInfo?.siteName" class="ion-no-margin ion-no-padding core-sitename">
+                    <!-- <p *ngIf="siteInfo?.siteName" class="ion-no-margin ion-no-padding core-sitename">
                         <core-format-text [text]="siteInfo?.siteName" [filter]="false"></core-format-text>
                     </p>
-                    <p class="core-siteurl">{{siteUrl}}</p>
+                    <p class="core-siteurl">{{siteUrl}}</p> -->
+                    <div style=" width: 90%;
+                    max-width: 300px;
+                    margin: 5px auto;">
+
+
+                        <img src="assets/img/silliconvalley.png" role="presentation" alt="">
+                    </div>
                 </div>
 
                 <div class="core-login-user">
@@ -74,7 +81,7 @@
                     </ion-button>
 
                     <!-- Forgotten password option. -->
-                    <ion-button *ngIf="showForgottenPassword" expand="block" fill="clear"
+                    <ion-button *ngIf="showForgottenPassword" style="color:  #3165ae;" expand="block" fill="clear"
                         class="core-login-forgotten-password core-button-as-link ion-text-wrap" (click)="forgottenPassword()">
                         {{ 'core.login.forgotaccount' | translate }}
                     </ion-button>

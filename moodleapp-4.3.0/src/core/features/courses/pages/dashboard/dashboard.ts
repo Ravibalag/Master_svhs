@@ -28,6 +28,10 @@ import { CoreTime } from '@singletons/time';
 import { CoreAnalytics, CoreAnalyticsEventType } from '@services/analytics';
 import { Translate } from '@singletons';
 import { CoreUtils } from '@services/utils/utils';
+import { HttpClient } from '@angular/common/http';
+import { CartService } from '../cartService';
+
+export const baseUrl: string = "https://lms.svhs.co";
 
 /**
  * Page that displays the dashboard page.
@@ -35,6 +39,8 @@ import { CoreUtils } from '@services/utils/utils';
 @Component({
     selector: 'page-core-courses-dashboard',
     templateUrl: 'dashboard.html',
+    styleUrls: ["dashboard.scss"],
+
 })
 export class CoreCoursesDashboardPage implements OnInit, OnDestroy {
 
@@ -48,11 +54,15 @@ export class CoreCoursesDashboardPage implements OnInit, OnDestroy {
     userId?: number;
     blocks: Partial<CoreCourseBlock>[] = [];
     loaded = false;
+    responseValue?:number;
+    value1: number = 0;
+    incompletedValue?:number;
+    CompletedValue?:number;
 
     protected updateSiteObserver: CoreEventObserver;
     protected logView: () => void;
 
-    constructor() {
+    constructor(private http: HttpClient,private cartService: CartService,) {
         // Refresh the enabled flags if site is updated.
         this.updateSiteObserver = CoreEvents.on(CoreEvents.SITE_UPDATED, () => {
             this.searchEnabled = !CoreCourses.isSearchCoursesDisabledInSite();
@@ -78,12 +88,40 @@ export class CoreCoursesDashboardPage implements OnInit, OnDestroy {
      * @inheritdoc
      */
     ngOnInit(): void {
+        const progressValue = 90; // Example progress value in percentage
+        this.value1 = progressValue / 100;
         this.searchEnabled = !CoreCourses.isSearchCoursesDisabledInSite();
         this.downloadCourseEnabled = !CoreCourses.isDownloadCourseDisabledInSite();
         this.downloadCoursesEnabled = !CoreCourses.isDownloadCoursesDisabledInSite();
 
         this.loadContent();
+        this.userId = CoreSites.getCurrentSiteUserId();
+
+        this.getData(this.userId);
+        this.getDashboardData(this.userId)
+        console.log("reenter");
+        this.cartService.cartCount$.subscribe(count => {
+          this.responseValue = count;
+        });
     }
+    getData(userId: number) {
+        this.http.get(baseUrl+`/webservice/rest/server.php?wstoken=9b90c397414127d3515d94173fd9ee70&wsfunction=local_mobile_store_courses_store_course_data&moodlewsrestformat=json&userid=`+userId)
+        .subscribe((data: any) => {
+
+           this.responseValue = data.Cartcount;
+
+        });
+     }
+     getDashboardData(userId: number) {
+        this.http.get(baseUrl+'/webservice/rest/server.php?wstoken=9b90c397414127d3515d94173fd9ee70&wsfunction=local_mobile_store_courses_dashboard_list&moodlewsrestformat=json&userid='+userId)
+        .subscribe((data: any) => {
+
+           this.incompletedValue = data.Notcompleted;
+           console.log("dashboard_value",this.incompletedValue);
+
+
+        });
+     }
 
     /**
      * Convenience function to fetch the dashboard data.
@@ -170,6 +208,15 @@ export class CoreCoursesDashboardPage implements OnInit, OnDestroy {
      */
     async openSearch(): Promise<void> {
         CoreNavigator.navigateToSitePath('/courses/list', { params : { mode: 'search' } });
+    }
+    async openCart(): Promise<void> {
+        CoreNavigator.navigateToSitePath('/courses/cartNav');
+    }
+    async enrollments(): Promise<void> {
+        CoreNavigator.navigateToSitePath('/courses/incompletedCourse');
+    }
+    async completed(): Promise<void> {
+        CoreNavigator.navigateToSitePath('/courses/completedCourse');
     }
 
     /**

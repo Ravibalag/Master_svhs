@@ -1,0 +1,52 @@
+ion-icon{
+    height: 50px !important;
+    color: blue;
+    font-size: 30px !important;
+}
+.radio{
+
+    box-shadow: none !important;
+    color: #629CD1;
+
+    background-color: white;}
+.filter{
+    margin-top: 5px;
+    margin-left: 15px;
+
+}
+.align{
+    margin-bottom: 10px;
+}
+ion-checkbox {
+    margin-top: 2px;
+    --size: 16px;
+    --checkbox-background-checked: blue;
+  }
+
+  ion-checkbox::part(container) {
+    border-radius: 6px;
+    border: 2px solid lightblue;
+  }
+.coursedapprovedby{
+    margin-top: 10px;
+}
+#list {
+
+    font-size: 14px;
+  }
+
+  #list ul li {
+    text-align: left;
+    list-style: disc;
+    margin: 5px 0px;
+  }
+
+.linkbutton{
+    font-size: 12px;
+    color: lightblue;
+    text-transform: none;
+}
+.headerstyle{
+    color: #2F64AD;
+    font-size: 16px;
+}
