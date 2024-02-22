@@ -168,7 +168,7 @@ ngOnInit(): void {
       console.log("id",this.userId);
 
        // document.getElementById('response').textContent = data.data;
-       this.http.get(baseUrl+`/webservice/rest/server.php?wstoken=9b90c397414127d3515d94173fd9ee70&wsfunction=local_mobile_store_courses_store_course_data&moodlewsrestformat=json&userid=`+userId)
+       this.http.get(baseUrl+`/webservice/rest/server.php?wstoken=900be856a14cea6109ef1f3f675879b7&wsfunction=local_mobile_store_courses_store_course_data&moodlewsrestformat=json&userid=`+userId)
        .subscribe((data: any) => {
 
          console.log("Response",data.data);
@@ -183,7 +183,7 @@ ngOnInit(): void {
     updateButton(r: any) {
        this.courseId = r.Course_ID;
        console.log("course_id",this.courseId);
-       this.http.get(baseUrl+`/webservice/rest/server.php?wstoken=9b90c397414127d3515d94173fd9ee70&wsfunction=local_mobile_store_courses_added_to_cart&moodlewsrestformat=json&courseid=`+this.courseId+`&userid=`+this.userId)
+       this.http.get(baseUrl+`/webservice/rest/server.php?wstoken=900be856a14cea6109ef1f3f675879b7&wsfunction=local_mobile_store_courses_added_to_cart&moodlewsrestformat=json&courseid=`+this.courseId+`&userid=`+this.userId)
        .subscribe((data: any) => {
         this.userId = CoreSites.getCurrentSiteUserId();
         this.getData(this.userId);

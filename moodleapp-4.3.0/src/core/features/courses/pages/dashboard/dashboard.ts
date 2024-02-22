@@ -105,7 +105,7 @@ export class CoreCoursesDashboardPage implements OnInit, OnDestroy {
         });
     }
     getData(userId: number) {
-        this.http.get(baseUrl+`/webservice/rest/server.php?wstoken=9b90c397414127d3515d94173fd9ee70&wsfunction=local_mobile_store_courses_store_course_data&moodlewsrestformat=json&userid=`+userId)
+        this.http.get(baseUrl+`/webservice/rest/server.php?wstoken=900be856a14cea6109ef1f3f675879b7&wsfunction=local_mobile_store_courses_store_course_data&moodlewsrestformat=json&userid=`+userId)
         .subscribe((data: any) => {
 
            this.responseValue = data.Cartcount;
@@ -113,7 +113,7 @@ export class CoreCoursesDashboardPage implements OnInit, OnDestroy {
         });
      }
      getDashboardData(userId: number) {
-        this.http.get(baseUrl+'/webservice/rest/server.php?wstoken=9b90c397414127d3515d94173fd9ee70&wsfunction=local_mobile_store_courses_dashboard_list&moodlewsrestformat=json&userid='+userId)
+        this.http.get(baseUrl+'/webservice/rest/server.php?wstoken=900be856a14cea6109ef1f3f675879b7&wsfunction=local_mobile_store_courses_dashboard_list&moodlewsrestformat=json&userid='+userId)
         .subscribe((data: any) => {
 
            this.incompletedValue = data.Notcompleted;
