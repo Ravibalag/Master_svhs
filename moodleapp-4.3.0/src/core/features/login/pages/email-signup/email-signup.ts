@@ -209,7 +209,19 @@ export class CoreLoginEmailSignupPage implements OnInit {
 
         this.categories = CoreLoginHelper.formatProfileFieldsForSignup(this.settings.profilefields);
         this.categories = this.categories.filter(cat => cat.name !== 'Full Time Students Only - Registration Information');
+        for (const category of this.categories) {
 
+            if (category.name === "SVHS Study Option") {
+              category.fields = category.fields.filter((field) => {
+                if (field.name === "Select the user account you need:" && field.defaultdata === "Part-time") {
+                    field.param1 = "Student\nEducator";
+                    field.param2 = "Part-time\nFull-time\nEducator";
+                  }
+                return field.name !== "Select the user account you need:" || field.defaultdata !== "Full-time";
+              });
+            }
+
+        }
         if (this.settings.recaptchapublickey) {
             this.captcha.recaptcharesponse = ''; // Reset captcha.
         }
