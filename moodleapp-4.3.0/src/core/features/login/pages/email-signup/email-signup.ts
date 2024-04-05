@@ -177,10 +177,15 @@ export class CoreLoginEmailSignupPage implements OnInit {
 
                     this.ageDigitalConsentVerification = !!result?.status;
                 }
-
                 await this.getSignupSettings();
             }
-
+            // for (const category of this.categories) {
+            //     for (const field of category.fields) {
+            //         if (category.name === "Student Info" && field.shortname === "DOB") {
+            //             field.datatype = 'date';
+            //         }
+            //     }
+            // }
             this.completeFormGroup();
         } catch (error) {
             if (this.allRequiredSupported) {
@@ -220,8 +225,15 @@ export class CoreLoginEmailSignupPage implements OnInit {
                 return field.name !== "Select the user account you need:" || field.defaultdata !== "Full-time";
               });
             }
-
+            for (const field of category.fields) {
+                // Check if the field's locked value is 1.
+                if (field.locked === 1) {
+                    // Change the locked value to 0.
+                    field.locked = 0;
+                }
+            }
         }
+            console.log("categories-----profile",this.categories);
         if (this.settings.recaptchapublickey) {
             this.captcha.recaptcharesponse = ''; // Reset captcha.
         }

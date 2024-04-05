@@ -4,11 +4,12 @@ import { CoreNavigator } from "@services/navigator";
 import { CoreSites } from "@services/sites";
 import { HttpClient } from '@angular/common/http';
 import { CoreCourseFormatDelegate } from "@features/course/services/format-delegate";
-import { CoreCourseAnyCourseData } from "@features/courses/services/courses";
+import { CoreCourseAnyCourseData, CoreCourses } from "@features/courses/services/courses";
 import { CoreDelegate } from "@classes/delegate";
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { COURSE_INDEX_PATH } from "@features/course/course-lazy.module";
 import { baseUrl } from "../dashboard/dashboard";
+import { CoreCourseHelper } from "@features/course/services/course-helper";
 // import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 
@@ -62,8 +63,15 @@ export class incompletedCourse {
       CoreNavigator.navigateToSitePath(`/main/home/grades/`+courseId);
      }
 
-    //     courseClick(courseId:number):void{
-    //    this.router.navigate([`/main/home/course/${courseId}`]);
-    //  }
+     async courseClick(courseId:number){
+          try {
+            const course = await CoreCourses.getUserCourse(courseId);
+            // this.course = Object.assign(this.course, course);
+            console.log("complete", course);
+            CoreCourseHelper.openCourse(course, { params: { isGuest: false } });
+          } catch (error) {
+            console.error("Error fetching course:", error);
+        }
+     }
 
 }

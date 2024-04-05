@@ -33,7 +33,7 @@
                 padding-top: 5px;
                 padding-bottom: 5px;
                 background-color: #cee0f1;
-                margin-bottom: 5px;">
+                margin-bottom: 5px;" (click)="courseClick(completedValue.Course_ID)">
                     <div>
 
                         <strong> {{completedValue['Course_Name']}}</strong>
@@ -46,7 +46,7 @@
                     <ion-card-content>
                         <div>
                             <strong>Grade:</strong>
-                            <strong> F(48.87%)</strong>
+                            <strong>{{ completedValue['Course_grade']}}</strong>
 
                             <p>Quizzes {{completedValue['Quiz']}}:Completed = {{completedValue['Quiz_completed']}} | Incomplete
                                 ={{completedValue['Quiz_incomplete']}}</p>

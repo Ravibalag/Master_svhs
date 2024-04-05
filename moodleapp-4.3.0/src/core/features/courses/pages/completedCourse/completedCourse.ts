@@ -4,6 +4,8 @@ import { CoreNavigator } from "@services/navigator";
 import { CoreSites } from "@services/sites";
 import { HttpClient } from '@angular/common/http';
 import { baseUrl } from "../dashboard/dashboard";
+import { CoreCourses } from "@features/courses/services/courses";
+import { CoreCourseHelper } from "@features/course/services/course-helper";
 
 @Component({
     selector: 'page-core-courses-completedCourse',
@@ -53,6 +55,16 @@ export class CompletedCourse {
      gradebooksClick(courseId:number) {
       CoreNavigator.navigateToSitePath(`/main/home/grades/`+courseId);
      }
+     async courseClick(courseId:number){
+      try {
+        const course = await CoreCourses.getUserCourse(courseId);
+        // this.course = Object.assign(this.course, course);
+        console.log("complete", course);
+        CoreCourseHelper.openCourse(course, { params: { isGuest: false } });
+      } catch (error) {
+        console.error("Error fetching course:", error);
+    }
+ }
 
 
 }

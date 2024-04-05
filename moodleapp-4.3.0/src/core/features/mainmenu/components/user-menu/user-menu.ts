@@ -34,6 +34,7 @@ import { ModalController, Translate } from '@singletons';
 import { Subscription } from 'rxjs';
 import { AlertController } from '@ionic/angular';
 import { CorePath } from '@singletons/path';
+import { baseUrl } from '@features/courses/pages/dashboard/dashboard';
 
 /**
  * Component to display a user menu.
@@ -288,7 +289,7 @@ export class CoreMainMenuUserMenuComponent implements OnInit, OnDestroy {
                 // this.enrolUrl = CorePath.concatenatePaths(currentSiteUrl, `my/req_deleteuser.php?mode=mobile`);
                 // console.log(this.enrolUrl);
 
-             this.enrolUrl =  `https://lms.svhs.co/my/req_deleteuser.php?userid=`+this.userId+`&mode=mobile`;
+             this.enrolUrl =  (baseUrl+`/my/req_deleteuser.php?userid=`+this.userId+`&mode=mobile`);
                 await CoreSites.getRequiredCurrentSite().openInBrowserWithAutoLogin(
                     this.enrolUrl,
                     undefined,

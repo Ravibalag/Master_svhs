@@ -27,6 +27,14 @@
                 <ng-container *ngTemplateOutlet="submissionStatus"></ng-container>
             </ion-label>
         </ion-item>
+        <div *ngIf="message">
+            <b>{{ message }}</b>
+        </div>
+        <div *ngIf="!hideReviseButton">
+            <ion-button
+                style="padding-left: 20px;padding-right: 20px;background-color: #3165ae; display: flex;justify-content: center;align-items: center;color: white;border-radius: 20px;"
+                color="white" (click)="revise()">Revise & Resubmit</ion-button>
+        </div>
 
         <!-- Status of the submission in the rest of cases. -->
         <ion-item class="ion-text-wrap" *ngIf="(blindMarking && user) || (!blindMarking && !user)">
@@ -392,8 +400,9 @@
                     </ng-container>
 
                     <!-- Data about the grader (teacher who graded). -->
-                    <ion-item class="ion-text-wrap" *ngIf="grader" core-user-link [userId]="grader!.id" [courseId]="courseId"
-                        [attr.aria-label]="grader!.fullname" detail="true">
+                    <!-- <ion-item class="ion-text-wrap" *ngIf="grader" core-user-link [userId]="grader!.id" [courseId]="courseId"
+                        [attr.aria-label]="grader!.fullname" detail="true"> -->
+                    <ion-item class="ion-text-wrap" *ngIf="grader" [attr.aria-label]="grader!.fullname">
                         <core-user-avatar [user]="grader" slot="start" [linkProfile]="false"></core-user-avatar>
                         <ion-label>
                             <p class="item-heading">{{ 'addon.mod_assign.gradedby' | translate }}</p>

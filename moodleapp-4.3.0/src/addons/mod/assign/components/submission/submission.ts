@@ -60,6 +60,9 @@ import { AddonModAssignModuleHandlerService } from '../../services/handlers/modu
 import { CanLeave } from '@guards/can-leave';
 import { CoreTime } from '@singletons/time';
 import { isSafeNumber, SafeNumber } from '@/core/utils/types';
+import { AlertController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+import { baseUrl } from '@features/courses/pages/dashboard/dashboard';
 
 /**
  * Component that displays an assignment submission.
@@ -151,9 +154,13 @@ export class AddonModAssignSubmissionComponent implements OnInit, OnDestroy, Can
     protected isDestroyed = false; // Whether the component has been destroyed.
     protected syncObserver: CoreEventObserver;
     protected hasOfflineGrade = false;
-
+    userId?: number;
+    hideReviseButton: boolean = false;
+    assID?: number;
+    message: string | null = null;
     constructor(
         @Optional() protected splitviewCtrl: CoreSplitViewComponent,
+        private alertController: AlertController,private http: HttpClient
     ) {
         this.siteId = CoreSites.getCurrentSiteId();
         this.currentUserId = CoreSites.getCurrentSiteUserId();
@@ -188,12 +195,28 @@ export class AddonModAssignSubmissionComponent implements OnInit, OnDestroy, Can
     /**
      * @inheritdoc
      */
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
         this.isSubmittedForGrading = !!this.submitId;
         this.showDates = !CoreSites.getCurrentSite()?.isVersionGreaterEqualThan('3.11');
 
-        this.loadData(true);
+        await this.loadData(true);
+        this.userId = CoreSites.getCurrentSiteUserId();
+         this.getData(this.userId);
     }
+
+    async getData(userId: number) {
+
+         this.http.get(baseUrl+`/webservice/rest/server.php?wstoken=900be856a14cea6109ef1f3f675879b7&wsfunction=local_mobile_store_courses_revise_button_enable&moodlewsrestformat=json&userid=`+userId+`&courseid=`+this.courseId+`&assid=`+this.assID+``)
+         .subscribe((data: any) => {
+
+           console.log("Respoms",data);
+           this.hideReviseButton = data.revisebutton === "disable";
+
+           this.message = data.message && data.message.trim() !== '' ? data.message : null;
+
+
+         });
+      }
 
     /**
      * Calculate the time remaining message and class.
@@ -520,6 +543,7 @@ export class AddonModAssignSubmissionComponent implements OnInit, OnDestroy, Can
         try {
             // Get the assignment.
             this.assign = await AddonModAssign.getAssignment(this.courseId, this.moduleId);
+            this.assID = this.assign.id;
 
             if (this.submitId != this.currentUserId && sync) {
                 // Teacher viewing a student submission. Try to sync the assign, there could be offline grades stored.
@@ -609,6 +633,40 @@ export class AddonModAssignSubmissionComponent implements OnInit, OnDestroy, Can
      */
     protected async loadSubmissionUserProfile(): Promise<void> {
         this.user = await CoreUser.getProfile(this.submitId, this.courseId);
+    }
+
+    //revise button
+    async revise(): Promise<void> {
+        this.userId = CoreSites.getCurrentSiteUserId();
+        const alert = await this.alertController.create({
+            header: 'Alert',
+            message: `
+                <p>Your assignment will be returned to draft. You have only two attempts at revising a submission to earn a higher score. Once you earn 90% or more, you will not be able to revise again. Review the teacher's feedback and the rubric. Make all the necessary updates before resubmitting.</p>
+                <p><strong>Warning:</strong> If you revert your assignment to draft, you must update and resubmit your submission BEFORE taking the Final Exam.</p>
+            `,
+            buttons: [
+                {
+                    text: 'Revert Assignment to Draft',
+                    handler: async () => {
+                        this.http.get(baseUrl+`/webservice/rest/server.php?wstoken=900be856a14cea6109ef1f3f675879b7&wsfunction=local_mobile_store_courses_revise_resubmit_action&moodlewsrestformat=json&userid=`+this.userId+`&assid=`+this.assID)
+                        .subscribe((data: any) => {
+                          console.log("Respoms_revise",data);
+                        });
+                        await this.invalidateAndRefresh(true);
+
+                    }
+                },
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+                        console.log('Cancel clicked');
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
 
     /**
